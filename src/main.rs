@@ -10,29 +10,23 @@ fn handle_client(mut stream: TcpStream) {
     let mut lines = request.lines();
 
     // Request line: GET /path HTTP/1.1
-    let request_line = lines.next().unwrap_or("");
+    let request_line = lines.nth(0).unwrap_or("");
     let mut parts = request_line.split_whitespace();
-    let method = parts.next().unwrap_or("");
-    let path = parts.next().unwrap_or("/");
+    let path = parts.nth(1).unwrap_or("/");
 
-    println!("{} {}", method, path);
+    // Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+    let accept_line = lines.nth(3).unwrap_or("");
+    let mut parts = accept_line.split_whitespace();
+    let accept_details = parts.nth(1).unwrap_or("");
+    let mut accept_parts = accept_details.split(";");
+    let mut accept_types = accept_parts.next().unwrap_or("*/*").split(",");
+    let accept_type = accept_types.next().unwrap_or("");
 
     // Build file path
     let filepath = if path == "/" {
         "./src/index.html".to_string()
     } else {
         format!("./src{}", path)
-    };
-
-    // Guess content type by extension
-    let content_type = if filepath.ends_with(".html") {
-        "text/html"
-    } else if filepath.ends_with(".css") {
-        "text/css"
-    } else if filepath.ends_with(".js") {
-        "application/javascript"
-    } else {
-        "text/plain"
     };
 
     // Try to read file
@@ -44,7 +38,7 @@ fn handle_client(mut stream: TcpStream) {
     let response = format!(
         "HTTP/1.1 {}\r\nContent-Type: {}\r\n\r\n{}",
         status,
-        content_type,
+        accept_type,
         body
     );
 
@@ -53,7 +47,7 @@ fn handle_client(mut stream: TcpStream) {
 }
 
 fn main() -> std::io::Result<()> {
-    let listener = TcpListener::bind("127.0.0.1:8080")?;
+    let listener = TcpListener::bind("0.0.0.0:8080")?;
 
     for stream in listener.incoming() {
         let stream = stream.unwrap();
