@@ -1,11 +1,34 @@
 body {
-	background-color: tomato;
+    background-color: #008080;
+    text-align: center;
 }
 
-h1 {
-	background-color: forestgreen;
+#title {
+    border: 2px solid black;
+    margin: 50px 50px 10px;
+    background-color: #c3c3c3;
+    box-shadow: 5px 5px 0px #111111;
 }
 
-p {
-	background-color: powderblue;
+#panels {
+    display: flex;
+    margin: 0px 50px;
+}
+
+#quicklinks {
+    flex: 0 0 10%;
+    margin-right: 20px;
+}
+
+#info {
+    flex: 1;
+}
+
+#quicklinks,
+#info {
+    float: left;
+    padding-bottom: 20px;
+    border: 2px solid black;
+    background-color: #fdffff;
+    box-shadow: 5px 5px 0px #111111;
 }
