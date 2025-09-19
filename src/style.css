@@ -21,6 +21,7 @@ html, body {
   background: linear-gradient(to right, #0c0c84, #1084d0);
   color: #ffffff;
   border: 3px solid black;
+  user-select: none;
 }
 
 .title {
@@ -29,10 +30,9 @@ html, body {
   color: black;
   font-size: 1.2em;
   font-weight: bold;
-  padding: 6px 10px;
   margin: 0;
   padding: 10px 20px;
-  border-bottom: 2px solid #555;
+  border-bottom: 3px solid #555;
   text-align: left;
   cursor: default;
   user-select: none;
@@ -47,27 +47,37 @@ html, body {
 #quicklinks {
     flex: 0 0 auto;
     margin-right: 20px;
+    border: 3px solid #555;
 }
 
 #info {
     flex: 1 1 0;
+    border: 3px solid #ebebeb;
+    padding: 0px 20px;
+    margin-right: 20px;
+}
+
+#about-me {
+    flex: 0 0 auto;
+    border: 3px solid #555;
 }
 
 #quicklinks,
-#info {
+#info,
+#about-me {
   display: flex;
   flex-direction: column;
   min-height: 0;
   overflow: auto;
 
   background-color: #fdffff;
-  border: 3px solid #ebebeb; 
 
   float: none;
 }
 
 #title,
 #quicklinks,
-#info {
+#info,
+#about-me {
   box-shadow: 5px 5px 0 #111111;
 }
